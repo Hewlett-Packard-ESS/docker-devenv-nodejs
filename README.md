@@ -1,28 +1,50 @@
-# hpess/devenv
-This is a container which has all of the tools required to dev in our environment such as:
-  - Ruby (with Rake, bundler)
-  - node.js (with grunt, jake, npm)
-
-It builds on the foundations of hpess/base
+# hpess/devenv-nodejs
+This container is a development environment for nodejs, expanding on the framework of hpess/devenv by installing the tools required to develop in node:
+ - nvm (default install v0.10.33)
+ - grunt, jake
 
 ## Use
+fig.yml:
 ```
-docker run -i -t hpess/devenv
+devenv:
+  image: hpess/devenv-nodejs
+  environment:
+    - ROOT_PASSWORD=secret
+  ports:
+    - '8022:22'
 ```
-
-And you'll get:
+or in line:
 ```
-HP ESS Development Environment
-Node Version: v0.10.33
-Ruby Version: ruby 2.0.0p353 (2013-11-22) [x86_64-linux]
+docker run -p 8022:22 hpess/devenv
 ```
-
-## Use in a cool, linked up kinda way
-If you're wanting to link your devenv to some other containers, and magically grunt it all, i reccomend using fig.   The configuration here defines the devenv, and the mysql server, and links the two.  It mounts our source code into the devenv so everything is ready to rock.
+results in:
+```
+devenv_1 | ***************************************************
+devenv_1 | *  Welcome to the HP ESS Development Environment!  
+devenv_1 | ***************************************************
+devenv_1 |  => You did not specify a command to run, therefore starting supervisor and sshd
+devenv_1 |  => You can login via ssh with username: root, password: secret
+devenv_1 |  => Wemux users can login with username: devenv, password: devenv
+devenv_1 | 2014-12-11 16:38:44,898 CRIT Set uid to user 0
+devenv_1 | 2014-12-11 16:38:44,898 WARN Included extra file "/etc/supervisord.d/sshd.service.conf" during parsing
+devenv_1 | 2014-12-11 16:38:44,939 INFO RPC interface 'supervisor' initialized
+devenv_1 | 2014-12-11 16:38:44,939 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+devenv_1 | 2014-12-11 16:38:44,939 INFO supervisord started with pid 11
+devenv_1 | 2014-12-11 16:38:45,945 INFO spawned: 'sshd' with pid 14
+devenv_1 | 2014-12-11 16:38:47,110 INFO success: sshd entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+```
+You can specify an exact command to run if you dont want to start sshd, etc
+```
+docker run hpess/devenv-nodejs grunt
+```
+This is an example fig file where I link this container to a mysql container, and run a bunch of tests:
 ```
 devenv:
  hostname: 'devenv'
- image: hpess/devenv
+ image: hpess/devenv-nodejs
+ command: /bin/true
+ ports: 
+  - '8022:22'
  volumes: 
   - ./:/storage
  links:
@@ -43,6 +65,16 @@ It's worth taking not of the fig stop, and fig rm --force at the end.  This will
 
 Watching works perfectly fine too, for example:
 ```
-fig up -d
 fig run devenv grunt watch
+```
+Results in:
+```
+[root@fedora opsview]# fig run devenv grunt watch
+***************************************************
+*  Welcome to the HP ESS Development Environment!  
+***************************************************
+Now using node v0.10.33
+ => Executing: grunt watch
+Running "watch" task
+Waiting...
 ```
