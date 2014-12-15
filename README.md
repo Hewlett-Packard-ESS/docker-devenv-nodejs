@@ -1,7 +1,7 @@
 # hpess/devenv-nodejs
 This container is a development environment for nodejs, expanding on the framework of hpess/devenv by installing the tools required to develop in node:
  - nvm (default install v0.10.33)
- - grunt, jake
+ - grunt, jake, forever
 
 ## Use
 fig.yml:
