@@ -6,5 +6,5 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.20.0/install.sh | b
 RUN source ~/.nvm/nvm.sh && nvm install 0.10
 
 # Configure some node bits
-RUN source ~/.bashrc && nvm use 0.10 && npm install -g grunt-cli jake
+RUN source ~/.bashrc && nvm use 0.10 && npm install -g grunt-cli jake forever
 RUN echo 'nvm use 0.10' >> ~/.bashrc
