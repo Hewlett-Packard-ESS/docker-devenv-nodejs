@@ -1,17 +1,17 @@
 FROM hpess/devenv:latest
 MAINTAINER Karl Stoney <karl.stoney@hp.com>
 
-# Some bits that node-gyp etc use
-RUN yum -y install gcc-c++ gcc make && \
-    yum -y clean all
+RUN git clone --depth=1 https://github.com/creationix/nvm.git /opt/nvm && \
+    mkdir -p /usr/local/nvm && \
+    mkdir -p /usr/local/node && \
+    chown -R devenv:devenv /usr/local/node && \
+    chown -R devenv:devenv /usr/local/nvm && \
+    chown -R devenv:devenv /opt/nvm
 
-# Install nvm
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.20.0/install.sh | bash
+ADD nvm.sh /etc/profile.d/nvm.sh
 
-# Configure nvm and node
-RUN source ~/.nvm/nvm.sh && \
-    nvm install 0.10 && \
-    source ~/.bashrc && \
-    nvm use 0.10 && \ 
-    npm install -g grunt-cli jake forever && \
-    echo 'nvm use 0.10' >> ~/.bashrc
+ENV NVM_DIR /usr/local/nvm
+ENV NPM_CONFIG_PREFIX /usr/local/node
+ENV PATH "/usr/local/node/bin:$PATH"
+
+RUN su - devenv -c 'nvm install 0.10'
