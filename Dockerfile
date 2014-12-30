@@ -17,3 +17,10 @@ ENV PATH "/usr/local/node/bin:$PATH"
 # Install version 0.10.x of node
 RUN su - devenv -c 'nvm install 0.10' && \
     su - devenv -c 'npm install -g grunt-cli jake forever'
+
+# Add the cookbooks
+COPY cookbooks/ /chef/cookbooks/
+
+# Set the chef local run list
+ENV chef_node_name devenv.docker.local
+ENV chef_run_list devenv 

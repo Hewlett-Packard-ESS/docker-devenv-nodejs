@@ -1,0 +1,9 @@
+[user]
+  name = <%= @confvars[:name] %>
+  email = <%= @confvars[:email] %>
+[push]
+  default = simple
+<% if @confvars[:sslVerify] == "false" %>
+[http]
+  sslVerify = false
+<% end %>

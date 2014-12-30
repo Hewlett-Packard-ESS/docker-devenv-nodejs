@@ -1,0 +1,7 @@
+loglevel=warn
+<% if !@confvars[:registry].nil? %>
+registry=<%= @confvars[:registry] %>
+<% end %>
+<% if @confvars[:sslVerify] == "false" %>
+strict-ssl=false
+<% end %>
