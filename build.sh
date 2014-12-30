@@ -1,1 +1,1 @@
-docker build -t hpess/devenv-nodejs:latest .
+sudo docker build -t hpess/devenv-nodejs:latest .

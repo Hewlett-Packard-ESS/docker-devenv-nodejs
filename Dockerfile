@@ -15,7 +15,5 @@ ENV NPM_CONFIG_PREFIX /usr/local/node
 ENV PATH "/usr/local/node/bin:$PATH"
 
 # Install version 0.10.x of node
-RUN su - devenv -c 'nvm install 0.10'
-
-# Install some common node modules
-RUN su - devenv -c 'npm install -g grunt-cli jake forever' 
+RUN su - devenv -c 'nvm install 0.10' && \
+    su - devenv -c 'npm install -g grunt-cli jake forever'
