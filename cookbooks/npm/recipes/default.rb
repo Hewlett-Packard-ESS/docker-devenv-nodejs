@@ -13,23 +13,10 @@ def default_value(val, default)
   end
 end
 
-gitConfig = {
-  :name => ENV['git_name'],
-  :email => ENV['git_email'],
-  :sslVerify => default_value(ENV['git_ssl_verify'], true)
-}
-
 npmrcConfig = {
   :registry => ENV['npm_registry'],
   :sslVerify => default_value(ENV['npm_ssl_verify'], true)
 }
-
-template '/home/devenv/.gitconfig' do
-  source '.gitconfig.erb'
-  user 'devenv'
-  group 'wheel'
-  variables ({ :confvars => gitConfig })
-end
 
 template '/home/devenv/.npmrc' do
   source '.npmrc.erb'

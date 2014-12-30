@@ -23,4 +23,4 @@ COPY cookbooks/ /chef/cookbooks/
 
 # Set the chef local run list
 ENV chef_node_name devenv.docker.local
-ENV chef_run_list devenv 
+ENV chef_run_list $chef_run_list,npm 

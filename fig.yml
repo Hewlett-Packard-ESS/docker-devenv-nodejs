@@ -1,0 +1,12 @@
+devenv:
+  image: hpess/devenv-nodejs
+  ports:
+    - "2022:2022"
+  environment:
+    devenv_password: "password"
+    devenv_wemux_password: "password"
+    git_name: "Mr Example"
+    git_email: "mr.example@domain.com"
+    git_ssl_verify: "false"
+    npm_registry: "http://registry.npmjs.org"
+    npm_ssl_verify: "false"
