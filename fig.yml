@@ -1,5 +1,6 @@
 devenv:
   image: hpess/devenv-nodejs
+  hostname: 'nodejs'
   ports:
     - "2022:2022"
   environment:
