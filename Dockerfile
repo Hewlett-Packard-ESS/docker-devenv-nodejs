@@ -8,7 +8,7 @@ RUN git clone --depth=1 https://github.com/creationix/nvm.git /opt/nvm && \
     chown -R devenv:devenv /usr/local/nvm && \
     chown -R devenv:devenv /opt/nvm
 
-ADD nvm.sh /etc/profile.d/nvm.sh
+COPY nvm.sh /etc/profile.d/nvm.sh
 
 ENV NVM_DIR /usr/local/nvm
 ENV NPM_CONFIG_PREFIX /usr/local/node
@@ -22,5 +22,5 @@ RUN su - devenv -c 'nvm install 0.10' && \
 COPY cookbooks/ /chef/cookbooks/
 
 # Set the chef local run list
-ENV chef_node_name devenv.docker.local
 ENV chef_run_list $chef_run_list,npm 
+ENV HPESS_ENV nodejs
