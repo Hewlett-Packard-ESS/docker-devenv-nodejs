@@ -19,9 +19,9 @@ npmrcConfig = {
   :sslVerify => default_value(ENV['npm_ssl_verify'], true)
 }
 
-template '/home/hpess/.npmrc' do
+template '/home/docker/.npmrc' do
   source '.npmrc.erb'
-  user 'hpess'
-  group 'hpess'
+  user 'docker'
+  group 'docker'
   variables ({ :confvars => npmrcConfig })
 end
