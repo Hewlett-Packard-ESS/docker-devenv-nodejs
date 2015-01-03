@@ -28,7 +28,7 @@ A breakdown here:
   - Npm details, again, not required.
   - Volumes: Mount your source code to /storage as that's the working directory.
 
-Then type `sudo fig up -d devenv` and ssh in with `ssh -T devenv@127.0.0.1 -p 2022`
+Then type `sudo fig up -d devenv` and ssh in with `ssh -T hpess@127.0.0.1 -p 2022`
 
 ## No SSH
 You can run a single command in the container, instead of sshd etc if you so chose, for example - if you just want to enter an interactive node shell `sudo fig run --rm devenv node` results in:
@@ -36,7 +36,7 @@ You can run a single command in the container, instead of sshd etc if you so cho
 ****************************************************
 *  Welcome to the HP ESS Development Environment!  *
 ****************************************************
- => Primary logon username: devenv, password: password
+ => Primary logon username: hpess, password: password
  => Wemux logon username: wemux, password: password
  => Executing: node
 > 
@@ -45,7 +45,7 @@ You can run a single command in the container, instead of sshd etc if you so cho
 ## SSH Agent Forwarding
 If you want to pass through your SSH identity, so that you can use git in the docker container with your credentials, use SSH Agent Forwarding:
 ```
-ssh -T devenv@127.0.0.1 -p 2022
+ssh -T hpess@127.0.0.1 -p 2022
 ```
 
 ## Even easier use

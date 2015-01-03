@@ -1,7 +1,6 @@
 #!/bin/bash
 hash nvm &> /dev/null
 if [ $? -eq 1 ]; then
-  echo "hii"
   CURRENT="none"
 else
   CURRENT=$(nvm current) 2>/dev/null
