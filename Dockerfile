@@ -16,7 +16,7 @@ ENV PATH "/usr/local/node/bin:$PATH"
 
 # Install version 0.10.x of node
 RUN su - devenv -c 'nvm install 0.10' && \
-    su - devenv -c 'npm install -g grunt-cli jake forever'
+    su - devenv -c 'npm install -g grunt-cli jake forever js-beautify'
 
 # Add the cookbooks
 COPY cookbooks/ /chef/cookbooks/
