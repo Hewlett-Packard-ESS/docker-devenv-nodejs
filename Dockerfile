@@ -4,9 +4,9 @@ MAINTAINER Karl Stoney <karl.stoney@hp.com>
 RUN git clone --depth=1 https://github.com/creationix/nvm.git /opt/nvm && \
     mkdir -p /usr/local/nvm && \
     mkdir -p /usr/local/node && \
-    chown -R devenv:devenv /usr/local/node && \
-    chown -R devenv:devenv /usr/local/nvm && \
-    chown -R devenv:devenv /opt/nvm
+    chown -R docker:docker /usr/local/node && \
+    chown -R docker:docker /usr/local/nvm && \
+    chown -R docker:docker /opt/nvm
 
 ADD nvm.sh /etc/profile.d/nvm.sh
 
@@ -15,8 +15,8 @@ ENV NPM_CONFIG_PREFIX /usr/local/node
 ENV PATH "/usr/local/node/bin:$PATH"
 
 # Install version 0.10.x of node
-RUN su - devenv -c 'nvm install 0.10' && \
-    su - devenv -c 'npm install -g grunt-cli jake forever js-beautify'
+RUN su - docker -c 'nvm install 0.10' && \
+    su - docker -c 'npm install -g grunt-cli jake forever js-beautify'
 
 # Add the cookbooks
 COPY cookbooks/ /chef/cookbooks/
