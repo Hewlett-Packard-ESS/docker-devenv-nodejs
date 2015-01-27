@@ -16,6 +16,7 @@ ENV PATH "/usr/local/node/bin:$PATH"
 
 # Install version 0.10.x of node
 RUN su - docker -c 'nvm install 0.10' && \
+    su - docker -c 'npm update -g npm' && \
     su - docker -c 'npm install -g grunt-cli jake forever js-beautify'
 
 # Add the cookbooks
