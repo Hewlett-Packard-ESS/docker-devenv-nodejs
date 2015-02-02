@@ -16,7 +16,12 @@ ENV PATH "/usr/local/node/bin:$PATH"
 
 # Install version 0.10.x of node
 RUN su - docker -c 'nvm install 0.10' && \
-    su - docker -c 'npm install -g npm npm-check-updates grunt-cli jake forever js-beautify'
+    su - docker -c 'npm install -g npm grunt-cli grunt-init npm-check-updates grunt-cli jake forever js-beautify'
+
+# Install the node mocha template
+RUN mkdir -p /home/docker/.grunt-init && \
+    git clone https://github.com/Stono/grunt-init-node-mocha.git /home/docker/.grunt-init/node-mocha && \
+    chown -R docker:docker /home/docker/.grunt-init
 
 # Install JQ to help with JSON command line parsing
 RUN cd /tmp && \
