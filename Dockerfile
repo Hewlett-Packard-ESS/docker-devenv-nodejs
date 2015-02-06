@@ -8,16 +8,6 @@ RUN git clone --depth=1 https://github.com/creationix/nvm.git /opt/nvm && \
     chown -R docker:docker /usr/local/nvm && \
     chown -R docker:docker /opt/nvm
 
-ADD nvm.sh /etc/profile.d/nvm.sh
-
-ENV NVM_DIR /usr/local/nvm
-ENV NPM_CONFIG_PREFIX /usr/local/node
-ENV PATH "/usr/local/node/bin:$PATH"
-
-# Install version 0.10.x of node
-RUN su - docker -c 'nvm install 0.10' && \
-    su - docker -c 'npm install -g npm grunt-cli grunt-init npm-check-updates grunt-cli jake forever js-beautify'
-
 # Install the node mocha template
 RUN mkdir -p /home/docker/.grunt-init && \
     git clone https://github.com/Stono/grunt-init-node-mocha.git /home/docker/.grunt-init/node-mocha && \
@@ -33,6 +23,16 @@ RUN cd /tmp && \
     make install && \
     cd /tmp && \
     rm -rf jq-1.4
+
+ADD nvm.sh /etc/profile.d/nvm.sh
+
+ENV NVM_DIR /usr/local/nvm
+ENV NPM_CONFIG_PREFIX /usr/local/node
+ENV PATH "/usr/local/node/bin:$PATH"
+
+# Install version 0.10.x of node
+RUN su - docker -c 'nvm install 0.10' && \
+    su - docker -c 'npm install -g npm grunt-cli grunt-init npm-check-updates grunt-cli jake forever js-beautify'
 
 # Add the cookbooks
 COPY cookbooks/ /chef/cookbooks/
