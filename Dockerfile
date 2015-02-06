@@ -34,6 +34,13 @@ ENV PATH "/usr/local/node/bin:$PATH"
 RUN su - docker -c 'nvm install 0.10' && \
     su - docker -c 'npm install -g npm grunt-cli grunt-init npm-check-updates grunt-cli jake forever js-beautify'
 
+# Install iojs 
+RUN cd /tmp && \
+    wget https://iojs.org/dist/v1.1.0/iojs-v1.1.0-linux-x64.tar.xz && \
+    tar -xf iojs-v*-linux-x64.tar.xz && \
+    mv iojs-v*/bin/iojs /usr/local/bin/iojs && \
+    rm -rf /tmp/iojs*
+
 # Add the cookbooks
 COPY cookbooks/ /chef/cookbooks/
 
