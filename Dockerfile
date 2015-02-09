@@ -31,8 +31,8 @@ ENV NPM_CONFIG_PREFIX /usr/local/node
 ENV PATH "/usr/local/node/bin:$PATH"
 
 # Install version 0.10.x of node
-RUN su - docker -c 'nvm install 0.10' && \
-    su - docker -c 'nvm install 0.12' && \
+RUN su - docker -c 'nvm install 0.12' && \
+    su - docker -c 'nvm install 0.10' && \
     su - docker -c 'npm install -g npm grunt-cli grunt-init npm-check-updates depcheck grunt-cli jake forever js-beautify'
 
 # Install iojs 
