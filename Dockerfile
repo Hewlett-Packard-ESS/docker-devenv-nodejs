@@ -1,4 +1,4 @@
-FROM hpess/devenv:latest
+FROM hpess/devenv:master
 MAINTAINER Karl Stoney <karl.stoney@hp.com>
 
 RUN git clone --depth=1 https://github.com/creationix/nvm.git /opt/nvm && \
