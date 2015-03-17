@@ -1,6 +1,6 @@
 # hpess/devenv-nodejs
 This container is a development environment for nodejs, expanding on the framework of [hpess/devenv](https://github.com/Hewlett-Packard-ESS/docker-devenv) by installing the tools required to develop in node:
- - nvm (default install node v0.10.35)
+ - nvm (default install node v0.12)
  - grunt, jake, forever
 
 ## Use
