@@ -1,3 +1,7 @@
 *.swp
 fig.yml
 storage/
+*_BACKUP_*
+*_LOCAL_*
+*_REMOTE_*
+*_BASE_*
