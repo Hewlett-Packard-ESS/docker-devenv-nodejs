@@ -1,1 +1,1 @@
-docker build -t hpess/devenv-nodejs:latest .
+docker build -t hpess/devenv-nodejs:master .
