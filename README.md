@@ -42,6 +42,9 @@ You can run a single command in the container, instead of sshd etc if you so cho
 > 
 ```
 
+## NodeJS application profiling
+I have made it easy for you to profile your nodejs applications and generate a flamegraph.svg.  Basically just be in the root of your application and type "node-profile".  CTRL+C when you're done and voilla, a flamegraph for that application will be copied to the /storage mount.
+
 ## SSH Agent Forwarding
 If you want to pass through your SSH identity, so that you can use git in the docker container with your credentials, use SSH Agent Forwarding:
 ```

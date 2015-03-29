@@ -1,0 +1,54 @@
+#!/bin/bash
+set -e
+if [ ! "`cat /proc/sys/kernel/kptr_restrict`" == "0" ]; then 
+	echo "kptr_restrict must be set to 0 for perf to work.  Will attempt to set now..."
+	set +e
+	sudo sysctl kernel/kptr_restrict=0
+	if [ ! "$?" == "0" ]; then
+		echo "Failed to set kptr_restrict.... are you in a Docker Container?  Try --privledged"
+	fi
+	set -e
+fi
+
+if [ ! -f "$PWD/app.js" ]; then
+    echo "No app.js found in current directory!"
+    exit 1
+fi
+
+if ! `which perf >/dev/null 2>&1`; then
+    echo "Perf not installed, downloading with yum..."
+    sudo -E yum -y install perf
+fi
+
+if [ ! -d "/usr/local/src/flamegraph" ]; then
+    echo "Flamegraph is missing, downloading..."
+    pushd /usr/local/src 
+    sudo wget --quiet https://github.com/brendangregg/FlameGraph/archive/master.tar.gz
+    sudo tar -xvzf master.tar.gz
+    sudo rm master.tar.gz
+    sudo mv FlameGraph* flamegraph
+    popd
+fi
+
+mkdir -p /storage/flamegraphs
+OUTPUT=/storage/flamegraphs/${PWD##*/}.svg
+
+function stop() {
+    kill $perf_pid
+    echo "Please wait, generating intermediate out..."
+    perf script | egrep -v "( __libc_start| LazyCompile | v8::internal::| Builtin:| Stub:| LoadIC:|\[unknown\]| LoadPolymorphicIC:)" | sed 's/ LazyCompile:[*~]\?/ /' | /usr/local/src/flamegraph/stackcollapse-perf.pl > /tmp/out.perf-folded
+    echo "Please wait, generating Flame Graph..."
+    /usr/local/src/flamegraph/flamegraph.pl /tmp/out.perf-folded > $OUTPUT 
+    echo "Please wait, cleaning up.."
+    rm isolate-*.log
+    rm perf.data
+    echo "Done!  Graph can be found in $OUTPUT"
+}
+trap stop TERM INT
+
+perf record -i -g -e cycles:u -- node --perf-basic-prof app.js &
+perf_pid=$!
+echo Profiling started, pid $perf_pid
+echo CTRL+C to stop profiling
+
+wait $perf_pid
