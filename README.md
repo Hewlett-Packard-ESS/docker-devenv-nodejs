@@ -1,7 +1,7 @@
 # hpess/devenv-nodejs
 This container is a development environment for nodejs, expanding on the framework of [hpess/devenv](https://github.com/Hewlett-Packard-ESS/docker-devenv) by installing the tools required to develop in node:
  - nvm (default install node v0.12)
- - grunt-cli, jake, forever, npm-check-updates, depcheck, js-beautify
+ - grunt-cli, jake, forever, npm-check-updates, depcheck, js-beautify, strongloop
 
 ## Use
 The easiest way is probably with a fig file, as you need to pass in some environment variables to configure things.
