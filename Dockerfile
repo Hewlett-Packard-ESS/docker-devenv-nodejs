@@ -33,6 +33,21 @@ ENV PATH "/usr/local/node/bin:$PATH"
 RUN su - docker -c 'nvm install 0.12' && \
     su - docker -c 'nvm use 0.12 && npm install -g npm grunt-cli grunt-init npm-check-updates depcheck grunt-cli jake forever js-beautify node-inspector'
 
+# Setup the super awesome node profiler...
+# Get perf
+RUN yum -y install perf && \
+    yum -y clean all
+
+# Now get flamegraph
+RUN cd /usr/local/src && \
+    wget --quiet https://github.com/brendangregg/FlameGraph/archive/master.tar.gz && \
+    tar -xzf master.tar.gz && \
+    rm master.tar.gz && \
+	mv FlameGraph* flamegraph
+
+# And finally add the script
+COPY node-profile /usr/local/bin/node-profile
+
 # Add the cookbooks
 COPY cookbooks/ /chef/cookbooks/
 
