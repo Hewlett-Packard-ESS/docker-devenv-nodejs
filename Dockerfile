@@ -1,6 +1,17 @@
 FROM hpess/devenv:master
 MAINTAINER Karl Stoney <karl.stoney@hp.com>
 
+# Corkscrew for tunnling ssh over https
+RUN cd /tmp && \
+    wget http://agroman.net/corkscrew/corkscrew-2.0.tar.gz && \
+    tar -xvzf corkscrew-* && \
+    cd corkscrew-* && \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf /tmp/corkscrew*
+
+# NVM for node management
 RUN git clone --depth=1 https://github.com/creationix/nvm.git /opt/nvm && \
     mkdir -p /usr/local/nvm && \
     mkdir -p /usr/local/node && \
@@ -34,7 +45,6 @@ RUN su - docker -c 'nvm install 0.12' && \
     su - docker -c 'nvm use 0.12 && npm install -g npm grunt-cli grunt-init npm-check-updates depcheck grunt-cli jake forever js-beautify node-inspector'
 
 # Setup the super awesome node profiler...
-# Get perf
 RUN yum -y install perf && \
     yum -y clean all
 
@@ -43,7 +53,7 @@ RUN cd /usr/local/src && \
     wget --quiet https://github.com/brendangregg/FlameGraph/archive/master.tar.gz && \
     tar -xzf master.tar.gz && \
     rm master.tar.gz && \
-	mv FlameGraph* flamegraph
+    mv FlameGraph* flamegraph
 
 # And finally add the script
 COPY node-profile /usr/local/bin/node-profile
