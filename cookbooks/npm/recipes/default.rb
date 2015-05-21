@@ -24,4 +24,5 @@ template '/home/docker/.npmrc' do
   user 'docker'
   group 'docker'
   variables ({ :confvars => npmrcConfig })
+  action :create_if_missing
 end
