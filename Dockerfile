@@ -42,7 +42,7 @@ ENV NPM_CONFIG_PREFIX /usr/local/node
 ENV PATH "/usr/local/node/bin:$PATH"
 
 RUN su - docker -c 'nvm install 0.12' && \
-    su - docker -c 'nvm use 0.12 && npm install -g nsp npm grunt-cli grunt-init npm-check-updates depcheck grunt-cli jake forever js-beautify node-inspector'
+    su - docker -c 'nvm use 0.12 && npm install -g https://github.com/Hewlett-Packard-ESS/nsp.git npm grunt-cli grunt-init npm-check-updates depcheck grunt-cli jake forever js-beautify node-inspector'
 
 # Setup the super awesome node profiler...
 RUN yum -y install perf && \
