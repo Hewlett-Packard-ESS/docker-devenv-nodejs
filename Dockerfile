@@ -25,7 +25,7 @@ RUN mkdir -p /home/docker/.grunt-init && \
     chown -R docker:docker /home/docker/.grunt-init
 
 # Install JQ to help with JSON command line parsing
-RUN yum install -f jq
+RUN yum install -y jq
 
 ADD nvm.sh /etc/profile.d/nvm.sh
 
