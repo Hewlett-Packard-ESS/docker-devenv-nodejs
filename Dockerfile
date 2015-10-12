@@ -25,15 +25,7 @@ RUN mkdir -p /home/docker/.grunt-init && \
     chown -R docker:docker /home/docker/.grunt-init
 
 # Install JQ to help with JSON command line parsing
-RUN cd /tmp && \
-    wget --quiet --connect-timeout 7 http://stedolan.github.io/jq/download/source/jq-1.4.tar.gz && \
-    tar zxf jq-1.4.tar.gz && \
-    cd jq-1.4 && \
-    ./configure && \
-    make && \
-    make install && \
-    cd /tmp && \
-    rm -rf jq-1.4
+RUN yum install -f jq
 
 ADD nvm.sh /etc/profile.d/nvm.sh
 
